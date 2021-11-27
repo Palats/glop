@@ -58,9 +58,6 @@ var tokenPriorities = map[tokenID]int{
 // tokenInfo give details about a token the lexer extracted - including
 // information about where it comes from.
 type tokenInfo struct {
-	// raw is the representation of the token, identical to the input. It also
-	// includes invalid bytes (i.e., not matching a valid unicode point).
-	raw string
 	// text is the list of valid runes of this token.
 	text []rune
 	// ref contains information about where the token comes from.

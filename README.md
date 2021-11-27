@@ -8,27 +8,22 @@ It tries to map as closely as possible to Go, relying on it when possible for mo
 
 The initial code was inspired by [Lispy by Peter Norvig](http://norvig.com/lispy.html) - though the actual code has nothing in common and does not try to be minimalistic.
 
-Building & Running
-------------------
-This uses standard [Go project hierarchy](see http://golang.org/doc/code.html). It is supposed to be placed in `$GOPATH/src/github.com/palats/glop`.
+Running
+-------
 
-* You will need to following libraries:
+All commands run from the base directory of the repository.
+
+* To run the REPL:
 ```bash
-go get github.com/GeertJohan/go.linenoise
-go get github.com/golang/glog
-```
-
-* Then, you can run the REPL:
-```
-go run $GOPATH/src/github.com/palats/glop/glop.go
+go run glop.go
 ```
 
 * Or you can execute a glop file:
-```
-go run $GOPATH/src/github.com/palats/glop/glop.go $GOPATH/src/github.com/palats/glop/example.glop
+```bash
+go run glop.go example.glop
 ```
 
-* To run all tests, from the glop/ directory:
+* To run all tests:
 ```bash
 go test ./...
 ```
@@ -40,7 +35,16 @@ File `example.glop` shows a few examples.
 
 Available list of functions is in `runtime/runtime.go`, in the `NewContext` function. Currently:
 
-* Basic lisp: `begin`, `quote`, `define`, `set!`, `if`, `lambda`, `cons`, `car`, `cdr`
+* Basic lisp:
+  * `(begin a...)`: Evaluate each parameters sequentially.
+  * `(quote a)`: Return `a` without evaluating it. Alias: `'a`.
+  * `(define id a)`: Define `id` to be equal to the evaluation of `a`. Alias to `set!`.
+  * `(set! id a)`: Define `id` to be equal to the evaluation of `a`. Alias to `define`.
+  * `(if a b c)`: Eval `a`; if true, evaluate `b`, otherwise evaluate `c`.
+  * `(lambda a b)`: Define a function taking the list of parameters `a`, and evaluating `b` with those parameters when called.
+  * `(cons a b)`: returns `[a] + b`.
+  * `(car a)`: returns `a[0]`.
+  * `(cdr a)`: returns `a[1:]`.
 
 * Constants: `true`, `false`
 
@@ -49,7 +53,12 @@ Available list of functions is in `runtime/runtime.go`, in the `NewContext` func
 * Operators: `==`, `!=`, `<`, `<=`, `>`, `>=`, `+`, `-`, `*` ; they look at the
   first argument to see whether they are operating on integer or floats.
 
-* Misc: `print`, `panic` (triggers a panic)
+* Misc:
+  * `(print a ...)`: Eval and print to stdout `a` and other parameters.
+  * `(length a)`: Eval `a` and return the length of value.
+  * `(type a)`: returns the type of `a`.
+  * `(eval a)`: Evaluate `a`.
+  * `(panic)`: Triggers a panic.
 
 
 Example:

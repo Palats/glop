@@ -101,7 +101,7 @@ type SourceRef struct {
 // end with a new line and may contain multiple lines.
 func (ref *SourceRef) Context(prefix string) string {
 	if ref.Source == nil {
-		return fmt.Sprintf("no source info")
+		return fmt.Sprintf("%sno source info", prefix)
 	}
 
 	line, err := ref.Source.Line(ref.Line)

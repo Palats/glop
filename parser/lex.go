@@ -67,10 +67,8 @@ type lexer struct {
 	line int
 	// token is the token being built - it will be sent to the channel once
 	// accept() is called.
-	token   *tokenInfo
-	tokens  chan tokenInfo
-	errors  []string
-	program Value
+	token  *tokenInfo
+	tokens chan tokenInfo
 }
 
 // peek looks one rune ahead in the input but does not advance the current
